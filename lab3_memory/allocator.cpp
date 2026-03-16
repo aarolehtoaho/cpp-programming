@@ -29,7 +29,7 @@ Allocator::Allocator(const std::string & studentFile, const std::string & roomFi
 
 Allocator::~Allocator()
 {
-  delete &alphabet;
+
 }
 
 /**
@@ -75,9 +75,9 @@ void Allocator::loadRooms(const std::string & file)
 	int i = 0;
 	while (fileio::areMoreRooms())
 	{
-	        i++;
 		rooms[i] = fileio::nextRoom();
 		totalCapacity += rooms[i].getCapacity();
+		i++;
 	}
 }
 
