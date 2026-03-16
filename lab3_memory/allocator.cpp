@@ -69,15 +69,15 @@ void Allocator::loadRooms(const std::string & file)
 {
 	// Read in rooms
 	fileio::loadRooms(file);
-	rooms.resize(fileio::getNumRooms(), Room());
+	roomCount = fileio::getNumRooms();
+	rooms.clear();
+	rooms.reserve(roomCount);
 
 	totalCapacity = 0;
-	int i = 0;
 	while (fileio::areMoreRooms())
 	{
-		rooms[i] = fileio::nextRoom();
-		totalCapacity += rooms[i].getCapacity();
-		i++;
+		rooms.push_back(fileio::nextRoom());
+		totalCapacity += rooms.back().getCapacity();
 	}
 }
 
@@ -113,8 +113,8 @@ void Allocator::printRooms()
 {
 	// Output the allocation
 	std::cout << "Room Allocation (" << studentCount << "/" << totalCapacity << ")" << std::endl;
-	for (int i = 0; i < roomCount; i++)
-		rooms[i].print();
+	for (Room room: rooms)
+		room.print();
 }
 
 /**
@@ -126,7 +126,7 @@ int Allocator::solve()
 	
 	for (int L = 0; L < 26; L++)
 	{
-		Room r = largestOpening();
+		Room & r = largestOpening();
 		r.addLetter(alphabet[L]);
 	}
 	
@@ -141,8 +141,8 @@ int Allocator::minSpaceRemaining()
 {
 	int border = 1000000;
 	for (int i = 0; i < roomCount; i++)
-		if (rooms[i].spaceRemaining() < border)
-			border = rooms[i].spaceRemaining();
+		if (rooms.at(i).spaceRemaining() < border)
+			border = rooms.at(i).spaceRemaining();
 	return border;
 }
 
@@ -155,11 +155,11 @@ Room & Allocator::largestOpening()
 	int max_remaining = 0;
 	for (int i = 0; i < roomCount; i++)
 	{
-		if (rooms[i].spaceRemaining() > max_remaining)
+		if (rooms.at(i).spaceRemaining() > max_remaining)
 		{
 			index = i;
-			max_remaining = rooms[i].spaceRemaining();
+			max_remaining = rooms.at(i).spaceRemaining();
 		}
 	}
-	return rooms[index];
+	return rooms.at(index);
 }
