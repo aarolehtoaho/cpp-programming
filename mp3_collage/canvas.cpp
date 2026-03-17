@@ -12,6 +12,7 @@ Canvas::Canvas()
 {
 	// TODO constructor
 	// Your code here
+	layers = std::vector<PNGLayer>();
 }
 
 // Just delete the list, the individual layers are handled by main
@@ -26,8 +27,8 @@ void Canvas::Add(size_t x, size_t y, const Vector2& pos, const Vector2& scale, c
 {
 	// TODO instead of a single layer, have a list
 	// Replace the code here
-        layers = new PNGLayer(x,y,pos,scale,col,name);
-        layercount = 1;  
+	layers.emplace_back(x, y, pos, scale, col, name);
+	layercount = layers.size();
 }
 
 // Get the latest layer added to the canvas
@@ -35,7 +36,7 @@ void Canvas::Add(size_t x, size_t y, const Vector2& pos, const Vector2& scale, c
 PNGLayer & Canvas::GetTopLayer(){
 	// TODO instead of a single layer,
 	// Return the latest/top layer from the list
-	return layers[0];
+	return layers.back();
 }
 
 // Get a layer by its name
@@ -72,7 +73,7 @@ void Canvas::draw(PNG& canvas) const
 {
 	for(size_t i=0; i<layercount; i++) {
 		//update this line
-		PNGLayer& layer = layers[0];
+		PNGLayer layer = layers.at(i);
 		
 		for(size_t x=0, xmax = layer.width(); x<xmax; x++){
 			for(size_t y=0, ymax = layer.height(); y<ymax; y++){
