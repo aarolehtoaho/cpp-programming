@@ -8,6 +8,7 @@
 #include "canvas.h"
 #include <iostream>
 #include <stdexcept>
+#include <cmath>
 
 Canvas::Canvas()
 {
@@ -128,8 +129,10 @@ void Canvas::draw(PNG& canvas) const
 						// Multiply x and y by layer scale
 						
 						// Modify the two lines below
-						int x1 = pos.x() + (int)(x * sc.x()) + xs;
-						int y1 = pos.y() + (int)(y * sc.y()) + ys;
+						int xdir = sc.x() > 0 ? 1 : -1;
+						int ydir = sc.y() > 0 ? 1 : -1;
+						int x1 = (int)(std::floor(pos.x() + x * sc.x())) + xs * xdir;
+						int y1 = (int)(std::floor(pos.y() + y * sc.y())) + ys * ydir;
 					  
 						// Check that it's within bounds
 						if(x1 >= 0 && x1 < (int)canvas.width() && y1 >= 0 && y1 < (int)canvas.height()) {
