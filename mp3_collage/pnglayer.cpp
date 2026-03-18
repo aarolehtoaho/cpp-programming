@@ -51,3 +51,7 @@ const Vector2& PNGLayer::getScale() const{
 void PNGLayer::SetPosition(const Vector2& pos){
 	position_ = pos;
 }
+
+const std::string& PNGLayer::getName() const {
+	return name_;
+}

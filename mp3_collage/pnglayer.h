@@ -23,6 +23,8 @@ class PNGLayer : public PNG
 		const Vector2& getScale() const;
 		RGBAPixel getBlendedPixel(size_t x, size_t y) const;
 		void SetPosition(const Vector2& pos);
+
+		const std::string& getName() const;
 	private:
 		Vector2 position_;
 		Vector2 scale_;
