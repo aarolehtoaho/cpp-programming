@@ -7,6 +7,7 @@
 
 #include "canvas.h"
 #include <iostream>
+#include <stdexcept>
 
 Canvas::Canvas()
 {
@@ -45,7 +46,13 @@ PNGLayer& Canvas::GetByName(const std::string& name){
 	// TODO instead of a single layer,
 	// Return the layer with matching name
 	// Report an error if it doesn't exist
-	return layers[0];
+	for (PNGLayer& layer : layers) {
+		if (layer.getName() == name) {
+			return layer;
+		}
+	}
+
+	throw std::invalid_argument("Layer" + name + " not found");
 }
 
 // Find and remove layer by name
@@ -55,6 +62,14 @@ void Canvas::Remove(const std::string& name)
 	// TODO instead of a single layer, should work for a list
 	// This removes the frame for the logo in the collage
 	// Your code here
+	for (size_t pos = 0; pos < layercount; pos++) {
+		PNGLayer& layer = layers.at(pos);
+		if (layer.getName().compare(name) == 0) {
+			layers.erase(layers.begin() + pos);
+			layercount = layers.size();
+			return;
+		}
+	}
 }
 
 // Find given layers from list and swap their positions
@@ -63,6 +78,23 @@ void Canvas::Swap(const std::string& name1, const std::string& name2)
 {
 	// TODO needed for collage so the frames can be drawn before images
 	// Your code here
+	size_t pos1 = -1;
+	size_t pos2 = -1;
+	for (size_t pos = 0; pos < layercount; pos++) {
+		PNGLayer& layer = layers.at(pos);
+		if (layer.getName().compare(name1) == 0) {
+			pos1 = pos;
+		}
+		if (layer.getName().compare(name2) == 0) {
+			pos2 = pos;
+		}
+	}
+
+	if (pos1 != (size_t)-1 && pos2 != (size_t)-1) {
+		PNGLayer temp = layers.at(pos1);
+		layers.at(pos1) = layers.at(pos2);
+		layers.at(pos2) = temp;
+	}
 }
 
 // Draws all layers in the list in order
