@@ -83,7 +83,7 @@ void Canvas::draw(PNG& canvas) const
 				Vector2 sc = layer.getScale();
 				
 				// TODO You should uncomment the below line and use in the section below
-				// Vector2 pos = layer.getPosition();
+				Vector2 pos = layer.getPosition();
 				
 				// A loop is needed in case it must be scaled up, or we end up with gaps
 				for(int xs=0; xs < std::abs((int)(sc.x()-0.001))+1; xs++){
@@ -96,8 +96,8 @@ void Canvas::draw(PNG& canvas) const
 						// Multiply x and y by layer scale
 						
 						// Modify the two lines below
-						int x1 = x;
-						int y1 = y;
+						int x1 = pos.x() + (int)(x * sc.x()) + xs;
+						int y1 = pos.y() + (int)(y * sc.y()) + ys;
 					  
 						// Check that it's within bounds
 						if(x1 >= 0 && x1 < (int)canvas.width() && y1 >= 0 && y1 < (int)canvas.height()) {
@@ -111,9 +111,9 @@ void Canvas::draw(PNG& canvas) const
 							// 1-254 = partly new pixel, partly old
 							
 							// Modify the three lines below
-							colc.red = coli.red;
-							colc.green = coli.green;
-							colc.blue = coli.blue;
+							colc.red = (coli.red * coli.alpha) / 255 + (colc.red * (255 - coli.alpha)) / 255;
+							colc.green = (coli.green * coli.alpha) / 255 + (colc.green * (255 - coli.alpha)) / 255;
+							colc.blue = (coli.blue * coli.alpha) / 255 + (colc.blue * (255 - coli.alpha)) / 255;
 
 							// We can keep the canvas opaque, no reason to change it
 							colc.alpha = 255;
