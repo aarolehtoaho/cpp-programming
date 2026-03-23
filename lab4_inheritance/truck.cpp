@@ -120,5 +120,13 @@ void Truck::clear()
   // Nothing to do here as we do not have raw pointers to worry about
 }
 
-
-
+void Truck::draw(PNG & canvas) const
+{
+	trailer.draw(canvas);
+	engine.draw(canvas);
+	cabin.draw(canvas);
+	window.draw(canvas);
+	for (int i = 0; i < NUM_WHEELS; i++) {
+		wheels[i].draw(canvas);
+	}
+}
