@@ -85,9 +85,9 @@ void List<T>::insertBack(const T & ndata)
     {
         while (temp->next != NULL)
             temp = temp->next;
-        temp = new ListNode(ndata);
-        length++;
+        temp->next = new ListNode(ndata);
     }
+    length++;
 }
 
 /**
