@@ -136,5 +136,29 @@ typename List<T>::ListNode* List<T>::reverse(ListNode* curr, ListNode* prev, int
 template <class T>
 void List<T>::shuffle()
 {
-    // @todo Graded in lab_gdb
+    // Split the list in half and set pointers to first nodes of each halves.
+    ListNode * firstNode = head;
+    int middle = length % 2 == 0 ? length / 2 - 1 : length / 2;
+    ListNode * middleNode = head;
+    for (int i = 0; i < middle; i++) {
+        middleNode = middleNode->next;
+    }
+    ListNode * temp = middleNode;
+    middleNode = middleNode->next;
+    temp->next = nullptr;
+
+    // Interleave the halves
+    temp = firstNode;
+    firstNode = firstNode->next;
+    while (firstNode != nullptr && middleNode != nullptr) {
+        temp->next = middleNode;
+        middleNode = middleNode->next;
+        temp = temp->next;
+        temp->next = firstNode;
+        firstNode = firstNode->next;
+        temp = temp->next;
+    }
+    if (middleNode != nullptr) {
+        temp->next = middleNode;
+    }
 }
