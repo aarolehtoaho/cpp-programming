@@ -38,13 +38,16 @@ void shuffleCards(){
 	
 	// Each card layer should be defined as a sample layer below.
 	// No need to reposition the cards yet, as we will need to shuffle them first.
-	PNGLayer p(WIDTH, HEIGHT, Vector2(0.0, 0.0), Vector2(1.0, 1.0), RGBAPixel(255,255,255,255),"1");
-		
-	// Read each layer from the corresponging image file
-	p.readFromFile(INPUT_FILE + "1.png");
+	for (int i = 10; i >= 1; i--) {
+		std::string num = std::to_string(i);
+		PNGLayer p(WIDTH, HEIGHT, Vector2(0.0, 0.0), Vector2(1.0, 1.0), RGBAPixel(255,255,255,255), num);
+			
+		// Read each layer from the corresponging image file
+		p.readFromFile(INPUT_FILE + num + ".png");
 
-	// Place the layers in the list
-	list.insertFront(p);
+		// Place the layers in the list
+		list.insertFront(p);
+	}
 
 	// Now shuffle the layers
 	// You MUST use the shuffle function from the List class (our Autograder will check for it)
@@ -56,10 +59,14 @@ void shuffleCards(){
 	// index should start with 0 to go up to the size of the list according to the shuffle function
 	// This ist the way the layers should be ordered in the Canvas object.
 	// Set up the position of each layer according to index and dimensions
-	p.SetPosition(Vector2(WIDTH/100 + (WIDTH-WIDTH/9)/num_cards * index, HEIGHT/4));
-	
-	//Add layers to the canvas
-	outputCanvas.Add(p);
+	for (auto & layer: list) {
+		PNGLayer p = layer;
+		p.SetPosition(Vector2(WIDTH/100 + (WIDTH-WIDTH/9)/num_cards * index, HEIGHT/4));
+		index++;
+		
+		//Add layers to the canvas
+		outputCanvas.Add(p);		
+	}
 	
 	// Draw the canvas with properly shuffled layers on the final PNG object.
 	// This needs to be done just once after all the layers are added.
