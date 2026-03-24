@@ -39,7 +39,15 @@ List<T>::~List()
 template <class T>
 void List<T>::clear()
 {
-    // @todo Graded in lab_gdb
+    ListNode * node = head;
+
+    while (node != NULL) {
+        ListNode * temp = node->next;
+        delete node;
+        node = temp;
+    }
+
+    node = nullptr;
 }
 
 /**
@@ -51,7 +59,10 @@ void List<T>::clear()
 template <class T>
 void List<T>::insertFront(T const & ndata)
 {
-    // @todo Graded in lab_gdb
+    ListNode* newNode = new ListNode(ndata);
+    newNode->next = head;
+    head = newNode;
+    length++;
 }
 
 /**
