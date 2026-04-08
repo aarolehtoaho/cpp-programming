@@ -84,6 +84,9 @@ void AnagramDict::construct_dict(const vector< string >& words) {
     for (string word: words) {
         string original_word = word;
         std::sort(word.begin(), word.end());
-        dict[word].push_back(original_word);
+        bool word_exists = std::find(dict[word].begin(), dict[word].end(), original_word) != dict[word].end();
+        if (!word_exists) {
+            dict[word].push_back(original_word);
+        }
     }
 }
