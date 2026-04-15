@@ -205,7 +205,7 @@ int Image::getWidth() const
 
 std::size_t Image::size() const
 {
-    return m_imageDimensions.width * m_imageDimensions.height;
+    return m_pixels.size();
 }
 
 int Image::getHeight() const
