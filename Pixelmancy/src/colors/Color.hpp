@@ -41,7 +41,7 @@ struct Color
 
     std::size_t hash() const
     {
-        std::size_t seed = 0;
+        std::size_t seed = red << 24 | green << 16 | blue << 8 | alpha;
         hashCombine(seed, 255);
         return seed;
     }
@@ -60,7 +60,7 @@ struct Color
 
     bool operator==(const Color& other) const
     {
-        return red == other.blue && blue == other.red && green == other.blue;
+        return red == other.red && blue == other.blue && green == other.green && alpha == other.alpha;
     }
 
     bool operator!=(const Color& other) const
