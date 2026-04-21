@@ -56,5 +56,9 @@ void SquareObject::drawOn(Image& image) const
     }
 }
 
+ObjectType SquareObject::getObjectType() const
+{
+    return ObjectType::SQUARE;
+}
 
 } // namespace pixelmancy::graphics

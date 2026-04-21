@@ -61,4 +61,9 @@ void CircleObject::drawOn(Image& image) const
     }
 }
 
+ObjectType CircleObject::getObjectType() const
+{
+    return ObjectType::CIRCLE;
+}
+
 } // namespace pixelmancy::graphics
