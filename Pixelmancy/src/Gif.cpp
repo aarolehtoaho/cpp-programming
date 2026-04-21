@@ -23,6 +23,7 @@ void Gif::close()
     if (pGIF)
     {
         cgif_close(pGIF);
+        pGIF = nullptr;
     }
     m_localToGlobalMappings.clear();
 }
