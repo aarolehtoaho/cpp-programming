@@ -49,7 +49,7 @@ void SquareObject::drawOn(Image& image) const
             {
                 if (x >= 0 && x < image.getWidth() && y >= 0 && y < image.getHeight())
                 {
-                    image(x, y) = m_fillColor;
+                    image(y, x) = m_fillColor;
                 }
             }
         }
